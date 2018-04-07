@@ -26,7 +26,37 @@
         background-size: cover;
     }
 
-    .postStyle{
+    .fragment {
+    font-size: 12px;
+    font-family: tahoma;
+    height: 140px;
+    border: 1px solid #ccc;
+    color: #555;
+    display: block;
+    padding: 10px;
+    box-sizing: border-box;
+    text-decoration: none;
+    }
+
+    .fragment:hover {
+        box-shadow: 2px 2px 5px rgba(0,0,0,.2);
+
+    }
+
+    .fragment img { 
+        float: left;
+        margin-right: 10px;
+    }
+
+
+    .fragment h3 {
+        padding: 0;
+        margin: 0;
+        color: #369;
+    }
+
+
+    /* .postStyle{
       border-radius: 10px;
       padding: 1em 3em 1em 3em;
       margin: 1em 5em 1em 5em;
@@ -40,7 +70,7 @@
 
     .imgStyle {
       margin: 0em 0em 1em 0em;
-    }
+    } */
 
     </style>
     
@@ -77,12 +107,13 @@
         
         const render = post => {
           const node = document.createElement('div');
-          node.innerHTML = `
-          <div class="postStyle">
-          <h5 class="titleStyle"> ${post.title} </h5> 
-          <p class="descStyle"> ${post.description} </p>
-          <img class="imgStyle" src="${post.img}" /> <br />
-          <a class="urlStyle" href="${post.link}" >${post.link} </a>          
+          node.innerHTML = `         
+          <a class="fragment" href="${post.link}">
+              <img src ="${post.img}" alt="description"/> 
+              <h3> ${post.title} </h3>
+              <p class="text">
+                  ${post.description}
+              </p>
           </div> `;
           
           app.appendChild(node);
