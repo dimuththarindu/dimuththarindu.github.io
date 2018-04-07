@@ -1,4 +1,3 @@
-<script>
 fetch('https://www.reddit.com/r/cats.json')
 .then(res=>res.json())
 .then(res=>res.data.children)
@@ -21,4 +20,3 @@ const render = post => {
       </a>`;
   app.appendChild(node);
 }
-</script>
