@@ -30,14 +30,14 @@
       font-size: 12px;
       font-family: tahoma;
       height: 200px;
-      border: 1px solid #ccc;
+      border: 1px solid #2b2929;
       color: #555;
       display: block;
       padding: 2em 2em 2em 2em; 
       box-sizing: border-box;
       text-decoration: none;
       margin: 1em 10em 1em 10em;
-      background-color: whitesmoke;
+      background-color: #2b2b29;
       border-radius: 10px;
     }
 
@@ -51,6 +51,7 @@
         margin-right: 10px;
         height: 150px;
         width: 150px;
+        border-radius: 5px;
     }
 
 
@@ -113,8 +114,9 @@
         
         const render = post => {
           const node = document.createElement('div');
-          node.innerHTML = `                
-          <div class="fragment" href="${post.link}">
+          node.innerHTML = `  
+          <div>              
+          <a class="fragment" href="${post.link}">
               <img src ="${post.img}" alt="description"/> 
               <h3> ${post.title} </h3>
               <p class="text">
