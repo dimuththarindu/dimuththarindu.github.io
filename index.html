@@ -21,9 +21,35 @@
 <body>
 
     <div id="app"></div>
-    <script src="PullImageFromReddit.js"></script>
 
-<div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+    <script>
+        fetch('https://www.reddit.com/r/cats.json')
+        .then(res=>res.json())
+        .then(res=>res.data.children)
+        .then(res=>res.map(post=>({
+          author: post.data.author,
+          link: post.data.url,
+          img: post.data.thumbnail,
+          title: post.data.title
+        })))
+        .then(res=>res.map(render))
+        .then(res=>console.log(res))
+        
+        const app = document.querySelector('#app');
+        
+        const render = post => {
+          const node = document.createElement('div');
+          node.innerHTML = `
+              <a href="${post.img}">
+                <img src="${post.link}"/>
+              </a>`;
+          app.appendChild(node);
+        }
+        </script>
+        
+        
+
+<!-- <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
   <div class="w3-display-topleft w3-padding-large w3-xlarge">
     DT
   </div>
@@ -32,7 +58,7 @@
     <hr class="w3-border-grey" style="margin:auto;width:40%">
     <p class="w3-large w3-center">Personal Webpage</p>
   </div>  
-</div>
+</div> -->
 
 </body>
 </html>
