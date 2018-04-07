@@ -41,7 +41,9 @@
           const node = document.createElement('div');
           node.innerHTML = `
               <a href="${post.img}">
-                <img src="${post.link}"/>
+                <p> ${post.title} </p>
+                <p> ${post.link} </p>
+                <imgs src="${post.link}"/>
               </a>`;
           app.appendChild(node);
         }
