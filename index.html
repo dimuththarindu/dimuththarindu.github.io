@@ -26,16 +26,22 @@
         background-size: cover;
     }
 
-    .postBlock{
+    .postStyle{
       border-radius: 10px;
-      padding: 1em;
+      padding: 1em 3em 1em 3em;
       margin: 1em 5em 1em 5em;
-      background-color: LightGray;
+      background-color: azure;
+      text-align: center;
     }
 
-    .title {
+    .titleStyle {
       font-weight: bold;
     }
+
+    .imgStyle {
+      margin: 0em 0em 1em 0em;
+    }
+
     </style>
     
   </head>
@@ -74,11 +80,11 @@
         const render = post => {
           const node = document.createElement('div');
           node.innerHTML = `
-          <div class="postBlock">
-          <p class="title"> ${post.title} </p> 
-          <p class="description"> ${post.description} </p>
-          <img class="img" src="${post.img}" /> <br />
-          <a class="url" href="${post.link}" >${post.link} </a>          
+          <div class="postStyle">
+          <h5 class="titleStyle"> ${post.title} </h5> 
+          <p class="descStyle"> ${post.description} </p>
+          <img class="imgStyle" src="${post.img}" /> <br />
+          <a class="urlStyle" href="${post.link}" >${post.link} </a>          
           </div> `;
           
           app.appendChild(node);
