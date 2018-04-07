@@ -19,6 +19,10 @@
       background-color: black;
     }
 
+    a {
+      text-decoration: none; /* no underline */
+    }
+
     .bgimg {
         background-image: url('https://images.alphacoders.com/106/thumb-1920-106571.jpg');
         min-height: 100%;
@@ -115,7 +119,7 @@
         const render = post => {
           const node = document.createElement('div');
           node.innerHTML = `     
-          <a href="${post.link}">          
+          <a href="${post.link}" target="_blank">          
           <div class="fragment">
               <img src ="${post.img}" alt="description"/>               
               <h3> ${post.title} </h3>
