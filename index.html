@@ -23,7 +23,7 @@
     <div id="app"></div>
 
     <script>
-        fetch('https://www.reddit.com/r/cats.json')
+        fetch('https://www.reddit.com/r/gifs.json')
         .then(res=>res.json())
         .then(res=>res.data.children)
         .then(res=>res.map(post=>({
