@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
    
    <style>
-    body,h1 
+    /* body,h1 
     {
       font-family: "Raleway", sans-serif
     }
@@ -25,7 +25,7 @@
         background-position: center;
         background-size: cover;
     }
-
+ */
     .fragment {
     font-size: 12px;
     font-family: tahoma;
@@ -107,8 +107,8 @@
         
         const render = post => {
           const node = document.createElement('div');
-          node.innerHTML = `         
-          <a class="fragment" href="${post.link}">
+          node.innerHTML = `                
+          <div class="fragment" href="${post.link}">
               <img src ="${post.img}" alt="description"/> 
               <h3> ${post.title} </h3>
               <p class="text">
