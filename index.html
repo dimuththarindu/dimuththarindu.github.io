@@ -6,17 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+	<link rel="stylesheet" href="github-widget.css" />
    
    <style>
     body,h1 
     {
-      font-family: "Raleway", sans-serif
+      font-family: "Raleway", sans-serif;
+	  color: #2d3436;
     }
 
     body, html 
     {
       height: 100%;
-      background-color: black;
+      background-color: #ecf0f1;
     }
 
     a {
@@ -24,7 +26,6 @@
     }
 
     .bgimg {
-        background-image: url('https://images.alphacoders.com/106/thumb-1920-106571.jpg');
         min-height: 100%;
         background-position: center;
         background-size: cover;
@@ -35,7 +36,6 @@
       font-family: tahoma;
       height: 200px;
       border: 1px solid #2b2929;
-      color: #555;
       display: block;
       padding: 2em 2em 2em 2em; 
       box-sizing: border-box;
@@ -89,53 +89,14 @@
   </head>
 <body>
 
-      <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
-        <div class="w3-display-topleft w3-padding-large w3-xlarge">          
-        </div>
-        <div class="w3-display-middle">
-          <h1 class="w3-jumbo w3-animate-top">Dimuth Tharindu</h1>
-          <hr class="w3-border-grey" style="margin:auto;width:40%">
-          <p class="w3-large w3-center">Personal Webpage</p> 
-        </div>          
-      </div>     
-
-      <div id="app"></div>
-
-  <!--
-    <script>
-        fetch('https://www.reddit.com/r/all.json')
-        .then(res=>res.json())
-        .then(res=>res.data.children)
-        .then(res=>res.map(post=>({
-          author: post.data.author,
-          link: post.data.url,
-          img: post.data.thumbnail,
-          description: post.data.selftext,
-          title: post.data.title
-        })))
-        .then(res=>res.map(render))
-        .then(res=>console.log(res))
-
-        const app = document.querySelector('#app');        
-        
-        const render = post => {          
-          const node = document.createElement('div');
-          node.innerHTML = `     
-          <a href="${post.link}" target="_blank">          
-          <div class="fragment">
-              <img src ="${post.img}" alt="description" onerror="this.src='https://i.imgur.com/3DL38jg.png';"/>               
-              <h3> ${post.title} </h3>
-              <p class="text">
-                  ${post.description}
-              </p>
-          </div> </a> `;
-          
-          app.appendChild(node);
-        }
-        </script>
-       --> 
-        
-
-
+	<div class="bgimg w3-display-container w3-animate-opacity">
+		<div class="w3-display-middle">
+			<h1 class="w3-jumbo w3-animate-top">Dimuth Tharindu</h1>
+			
+			<div class="github-widget" data-user="DimuthTharindu" data-options='{"sortBy":"stargazers_count", "forks":true}'></div>
+		</div>          
+	</div>     
+	<script src="github-widget.min.js"></script>
 </body>
 </html>
+
