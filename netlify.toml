@@ -21,3 +21,9 @@ from = "/github"
 to = "https://github.dimuththarindu.com"
 status = 301
 force = true
+
+[[redirects]]
+from = "/instagram"
+to = "https://instagram.dimuththarindu.com"
+status = 301
+force = true
