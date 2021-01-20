@@ -39,3 +39,15 @@ from = "/medium"
 to = "https://medium.dimuththarindu.com"
 status = 301
 force = true
+
+[[redirects]]
+from = "/stackexchange"
+to = "https://stackexchange.dimuththarindu.com"
+status = 301
+force = true
+
+[[redirects]]
+from = "/stackoverflow"
+to = "https://stackoverflow.dimuththarindu.com"
+status = 301
+force = true
