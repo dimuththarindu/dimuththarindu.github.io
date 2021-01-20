@@ -1,0 +1,5 @@
+[[redirects]]
+  from = "/example"
+  to = "https://example.com"
+  status = 301
+  force = true # COMMENT: ensure that we always redirect
