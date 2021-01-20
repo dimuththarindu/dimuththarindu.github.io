@@ -4,8 +4,63 @@
   status = 301
   force = true # COMMENT: ensure that we always redirect
   
-  [[redirects]]
-  from = "/example2"
-  to = "https://example2.com"
+[[redirects]]
+  from = "/fb"
+  to = "https://facebook.dimuththarindu.com"
   status = 301
   force = true # COMMENT: ensure that we always redirect
+
+[[redirects]]
+  from = "/facebook"
+  to = "https://facebook.dimuththarindu.com"
+  status = 301
+  force = true # COMMENT: ensure that we always redirect
+  
+[[redirects]]
+  from = "/github"
+  to = "https://github.dimuththarindu.com"
+  status = 301
+  force = true # COMMENT: ensure that we always redirect
+
+[[redirects]]
+  from = "/instagram"
+  to = "https://instagram.dimuththarindu.com"
+  status = 301
+  force = true # COMMENT: ensure that we always redirect
+  
+[[redirects]]
+  from = "/linkedin"
+  to = "https://linkedin.dimuththarindu.com"
+  status = 301
+  force = true # COMMENT: ensure that we always redirect
+
+[[redirects]]
+  from = "/medium"
+  to = "https://medium.dimuththarindu.com"
+  status = 301
+  force = true # COMMENT: ensure that we always redirect
+  
+[[redirects]]
+  from = "/stackexchange"
+  to = "https://stackexchange.dimuththarindu.com"
+  status = 301
+  force = true # COMMENT: ensure that we always redirect
+  
+[[redirects]]
+  from = "/stackoverflow"
+  to = "https://stackoverflow.dimuththarindu.com"
+  status = 301
+  force = true # COMMENT: ensure that we always redirect
+  
+[[redirects]]
+  from = "/twitter"
+  to = "https://twitter.dimuththarindu.com"
+  status = 301
+  force = true # COMMENT: ensure that we always redirect
+
+[[redirects]]
+  from = "/youtube"
+  to = "https://youtube.dimuththarindu.com
+  status = 301
+  force = true # COMMENT: ensure that we always redirect
+  
