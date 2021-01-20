@@ -3,3 +3,9 @@
   to = "https://example.com"
   status = 301
   force = true # COMMENT: ensure that we always redirect
+  
+  [[redirects]]
+  from = "/example2"
+  to = "https://example2.com"
+  status = 301
+  force = true # COMMENT: ensure that we always redirect
