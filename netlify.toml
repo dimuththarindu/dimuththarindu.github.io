@@ -53,6 +53,12 @@ status = 301
 force = true
 
 [[redirects]]
+from = "/youtube"
+to = "https://youtube.dimuththarindu.com/"
+status = 301
+force = true
+
+[[redirects]]
 from = "/twitter"
 to = "https://twitter.dimuththarindu.com"
 status = 301
