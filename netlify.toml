@@ -15,3 +15,9 @@ from = "/facebook"
 to = "https://facebook.dimuththarindu.com"
 status = 301
 force = true
+
+[[redirects]]
+from = "/github"
+to = "https://github.dimuththarindu.com"
+status = 301
+force = true
