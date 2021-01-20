@@ -27,3 +27,15 @@ from = "/instagram"
 to = "https://instagram.dimuththarindu.com"
 status = 301
 force = true
+
+[[redirects]]
+from = "/linkedin"
+to = "https://linkedin.dimuththarindu.com"
+status = 301
+force = true
+
+[[redirects]]
+from = "/medium"
+to = "https://medium.dimuththarindu.com"
+status = 301
+force = true
