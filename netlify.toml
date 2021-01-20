@@ -51,3 +51,9 @@ from = "/stackoverflow"
 to = "https://stackoverflow.dimuththarindu.com"
 status = 301
 force = true
+
+[[redirects]]
+from = "/twitter"
+to = "https://twitter.dimuththarindu.com"
+status = 301
+force = true
