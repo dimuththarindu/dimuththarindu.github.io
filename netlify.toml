@@ -1,10 +1,4 @@
 [[redirects]]
-from = "/example"
-to = "https://example.com"
-status = 301
-force = true
-
-[[redirects]]
 from = "/fb"
 to = "https://facebook.dimuththarindu.com"
 status = 301
@@ -61,5 +55,11 @@ force = true
 [[redirects]]
 from = "/twitter"
 to = "https://twitter.dimuththarindu.com"
+status = 301
+force = true
+
+[[redirects]]
+from = "/tiktok"
+to = "https://tiktok.dimuththarindu.com"
 status = 301
 force = true
