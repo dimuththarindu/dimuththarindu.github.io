@@ -63,3 +63,9 @@ from = "/tiktok"
 to = "https://tiktok.dimuththarindu.com"
 status = 301
 force = true
+
+[[redirects]]
+from = "/*"
+to = "https://dimuththarindu.com"
+status = 404
+force = true
