@@ -65,6 +65,6 @@ status = 301
 force = true
 
 [[redirects]]
-from = "*"
+from = "/*"
 to = "/home"
 status = 404
