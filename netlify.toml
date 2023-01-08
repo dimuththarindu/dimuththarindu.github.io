@@ -1,70 +1,70 @@
-[[redirects]]
-from = "/fb"
-to = "https://facebook.dimuththarindu.com"
-status = 301
-force = true
-
-[[redirects]]
-from = "/facebook"
-to = "https://facebook.dimuththarindu.com"
-status = 301
-force = true
-
-[[redirects]]
-from = "/github"
-to = "https://github.dimuththarindu.com"
-status = 301
-force = true
-
-[[redirects]]
-from = "/instagram"
-to = "https://instagram.dimuththarindu.com"
-status = 301
-force = true
-
-[[redirects]]
-from = "/linkedin"
-to = "https://linkedin.dimuththarindu.com"
-status = 301
-force = true
-
-[[redirects]]
-from = "/medium"
-to = "https://medium.dimuththarindu.com"
-status = 301
-force = true
-
-[[redirects]]
-from = "/stackexchange"
-to = "https://stackexchange.dimuththarindu.com"
-status = 301
-force = true
-
-[[redirects]]
-from = "/stackoverflow"
-to = "https://stackoverflow.dimuththarindu.com"
-status = 301
-force = true
-
-[[redirects]]
-from = "/youtube"
-to = "https://youtube.dimuththarindu.com/"
-status = 301
-force = true
-
-[[redirects]]
-from = "/twitter"
-to = "https://twitter.dimuththarindu.com"
-status = 301
-force = true
-
-[[redirects]]
-from = "/tiktok"
-to = "https://tiktok.dimuththarindu.com"
-status = 301
-force = true
-
-[[redirects]]
-from = "*"
-to = "/"
-status = 404
+#[[redirects]]
+#from = "/fb"
+#to = "https://facebook.dimuththarindu.com"
+#status = 301
+#force = true
+#
+#[[redirects]]
+#from = "/facebook"
+#to = "https://facebook.dimuththarindu.com"
+#status = 301
+#force = true
+#
+#[[redirects]]
+#from = "/github"
+#to = "https://github.dimuththarindu.com"
+#status = 301
+#force = true
+#
+#[[redirects]]
+#from = "/instagram"
+#to = "https://instagram.dimuththarindu.com"
+#status = 301
+#force = true
+#
+#[[redirects]]
+#from = "/linkedin"
+#to = "https://linkedin.dimuththarindu.com"
+#status = 301
+#force = true
+#
+#[[redirects]]
+#from = "/medium"
+#to = "https://medium.dimuththarindu.com"
+#status = 301
+#force = true
+#
+#[[redirects]]
+#from = "/stackexchange"
+#to = "https://stackexchange.dimuththarindu.com"
+#status = 301
+#force = true
+#
+#[[redirects]]
+#from = "/stackoverflow"
+#to = "https://stackoverflow.dimuththarindu.com"
+#status = 301
+#force = true
+#
+#[[redirects]]
+#from = "/youtube"
+#to = "https://youtube.dimuththarindu.com/"
+#status = 301
+#force = true
+#
+#[[redirects]]
+#from = "/twitter"
+#to = "https://twitter.dimuththarindu.com"
+#status = 301
+#force = true
+#
+#[[redirects]]
+#from = "/tiktok"
+#to = "https://tiktok.dimuththarindu.com"
+#status = 301
+#force = true
+#
+#[[redirects]]
+#from = "*"
+#to = "/"
+#status = 404
