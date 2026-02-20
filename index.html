@@ -1,73 +1,49 @@
 <!doctype html>
 <html lang="en">
-
 <head>
-	<!-- meta tags -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Personal Website">
-	<meta name="author" content="Dimuth Tharindu">
-	<meta name="google-site-verification" content="AYzBqhP0w-W9JcdF1pvDMS03t54DQT-2VW7epwpzczo" />
-	
-	<style>
-	.bg-cus-01 {
-		background-color: #333;
-	}
-	
-	#header {
-		position: fixed;
-		bottom: 4rem;
-		left: 4rem;
-	}
-	
-	.hello-header {
-		font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
-		color: #17a2b8;
-		font-size: 15vmin;
-		font-weight: 700;
-		letter-spacing: 0.02em;
-	}
-	
-	.hello-body {
-		font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
-		font-style: italic;
-		color: #17a2b8;
-		font-size: 12vmin;
-		font-weight: 300;
-		letter-spacing: 0.02em;
-	}
-	</style>
-	
-	<!-- Bootstrap CSS id="bg"-->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	<title>Hello, stranger!</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>No.</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .no {
+      font-size: 72px;
+      font-weight: 800;
+      margin: 0 0 16px 0;
+    }
+
+    .reason {
+      font-size: 22px;
+      max-width: 800px;
+    }
+  </style>
 </head>
+<body>
 
-<body class="bg-cus-01">
-	<div id="header">
-		<div class="hello-header text-info font-weight-bold">Hello,</div>
-		<div id="strngr" class="hello-body text-info font-italic"></div>
-	</div>
-	
-	<script>
-	var i = 0;
-	var txt = 'stranger!';
-	var speed = 100;
-	typeWriter();
+  <div class="no">No.</div>
+  <div id="reason" class="reason">Loading...</div>
 
-	function typeWriter() {
-		if(i < txt.length) {
-			document.getElementById("strngr").innerHTML += txt.charAt(i);
-			i++;
-			setTimeout(typeWriter, speed);
-		}
-	}
-	</script>
-	
-	<!-- Bootstrap JavaScript -->
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script>
+    fetch("https://naas.isalman.dev/no")
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById("reason").textContent = data.reason;
+      })
+      .catch(() => {
+        document.getElementById("reason").textContent = "No reason available.";
+      });
+  </script>
+
 </body>
-
 </html>
