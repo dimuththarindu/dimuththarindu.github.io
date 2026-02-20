@@ -20,13 +20,13 @@
     html, body {
       margin: 0;
       height: 100%;
-      overflow: hidden; /* no scrollbars */
+      overflow: hidden;
     }
 
     :root {
       color-scheme: light dark;
-      --no-top: 38vh;                 /* "No." anchor position */
-      --gap: clamp(10px, 2vh, 18px);  /* space between No. and reason */
+      --no-top: 38vh;
+      --gap: clamp(10px, 2vh, 18px);
       --side-pad: clamp(16px, 4vw, 44px);
     }
 
@@ -36,6 +36,8 @@
       padding: var(--side-pad);
       background: #ffffff;
       color: #111111;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -57,36 +59,34 @@
       font-size: clamp(44px, 10vw, 100px);
       white-space: nowrap;
       user-select: none;
+      pointer-events: none;
     }
 
     .reason {
       position: fixed;
       left: 50%;
       top: calc(var(--no-top) + var(--gap) + 56px);
-      transform: translateX(-50%);
+      transform: translate(-50%, 10px);
       width: min(920px, calc(100vw - (2 * var(--side-pad))));
       margin: 0;
 
       font-size: clamp(16px, 3.2vw, 28px);
       line-height: 1.4;
-      opacity: 0.86;
+      opacity: 0;
       overflow-wrap: anywhere;
 
-      /* No layout shift + no scrollbars: clamp long text */
       display: -webkit-box;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 4;
       overflow: hidden;
 
-      /* reveal animation */
-      opacity: 0;
-      transform: translateX(-50%) translateY(10px);
-      transition: opacity 300ms ease, transform 300ms ease;
+      transition: opacity 250ms ease, transform 250ms ease;
+      pointer-events: none;
     }
 
     .reason.loaded {
       opacity: 0.9;
-      transform: translateX(-50%) translateY(0);
+      transform: translate(-50%, 0);
     }
 
     @media (min-height: 820px) {
@@ -100,49 +100,60 @@
       transform: translateX(-50%);
       font-size: 12px;
       opacity: 0.55;
-      user-select: none;
       white-space: nowrap;
+      pointer-events: none;
     }
   </style>
 </head>
 
 <body>
   <h1 class="no" id="noText">No.</h1>
-  <p id="reason" class="reason">Loading…</p>
-  <div class="footer">© <script>document.write(new Date().getFullYear())</script> Dimuth. Thanks for stopping by!</div>
+  <p id="reason" class="reason" aria-live="polite">Loading…</p>
+  <div class="footer">© <span id="year"></span> Dimuth. Thanks for stopping by!</div>
 
   <script>
     const API_URL = "https://naas.isalman.dev/no";
     const reasonEl = document.getElementById("reason");
     const noEl = document.getElementById("noText");
+    const yearEl = document.getElementById("year");
 
-    const variants = ["No.", "Nope.", "Absolutely not.", "Hard pass."];
+	const variants = ["No.", "Nope.", "Absolutely not.", "Hard pass.", "That’s a no.", "Not today.", "Respectfully, no."];
+
+    let loading = false;
 
     async function loadReason() {
-      // Keep "No." fixed, only update text
-      noEl.textContent = variants[Math.floor(Math.random() * variants.length)];
+      if (loading) return; // prevent spam clicking
+      loading = true;
 
+      noEl.textContent = variants[Math.floor(Math.random() * variants.length)];
       reasonEl.classList.remove("loaded");
       reasonEl.textContent = "Loading…";
 
       try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 4000);
+
         const res = await fetch(API_URL + "?t=" + Date.now(), {
-          headers: { "Accept": "application/json" }
+          headers: { "Accept": "application/json" },
+          signal: controller.signal
         });
+
+        clearTimeout(timeout);
+
+        if (!res.ok) throw new Error("Network error");
         const data = await res.json();
         reasonEl.textContent = data?.reason || "No reason available.";
       } catch {
         reasonEl.textContent = "No reason available.";
       } finally {
-        // trigger animation on next frame
         requestAnimationFrame(() => reasonEl.classList.add("loaded"));
+        loading = false;
       }
     }
 
-    // Click anywhere for a new one (no button)
     document.addEventListener("click", loadReason);
+    yearEl.textContent = new Date().getFullYear();
 
-    // Initial load
     loadReason();
   </script>
 </body>
