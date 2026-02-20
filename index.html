@@ -12,7 +12,12 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap" rel="stylesheet">
+  <!-- Performance polish: load font without blocking render -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap" rel="stylesheet">
+  </noscript>
 
   <style>
     * { box-sizing: border-box; }
@@ -28,6 +33,7 @@
       --no-top: 38vh;
       --gap: clamp(10px, 2vh, 18px);
       --side-pad: clamp(16px, 4vw, 44px);
+      --bg-shift: 0; /* for background shift */
     }
 
     body {
@@ -38,12 +44,29 @@
       color: #111111;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
+
+      /* Fade background shift on click */
+      transition: background 350ms ease;
     }
 
     @media (prefers-color-scheme: dark) {
       body {
-        background: radial-gradient(circle at center, #1a1a1a, #0f0f0f);
+        background: radial-gradient(
+          circle at calc(50% + (var(--bg-shift) * 1%)) center,
+          #1a1a1a,
+          #0f0f0f
+        );
         color: #ffffff;
+      }
+    }
+
+    @media (prefers-color-scheme: light) {
+      body {
+        background: radial-gradient(
+          circle at calc(50% + (var(--bg-shift) * 1%)) center,
+          #ffffff,
+          #f2f2f2
+        );
       }
     }
 
@@ -60,6 +83,7 @@
       white-space: nowrap;
       user-select: none;
       pointer-events: none;
+      will-change: transform; /* parallax perf */
     }
 
     .reason {
@@ -117,44 +141,116 @@
     const noEl = document.getElementById("noText");
     const yearEl = document.getElementById("year");
 
-	const variants = ["No.", "Nope.", "Absolutely not.", "Hard pass.", "That’s a no.", "Not today.", "Respectfully, no."];
+    const variants = ["No.", "Nope.", "Absolutely not.", "Hard pass.", "That’s a no.", "Not today.", "Respectfully, no."];
 
-    let loading = false;
+    // Instant feel: preload next reason in background
+    let nextReason = null;
+    let nextFetchedAt = 0;
 
-    async function loadReason() {
-      if (loading) return; // prevent spam clicking
-      loading = true;
+    function pickVariant() {
+      return variants[Math.floor(Math.random() * variants.length)];
+    }
 
-      noEl.textContent = variants[Math.floor(Math.random() * variants.length)];
-      reasonEl.classList.remove("loaded");
-      reasonEl.textContent = "Loading…";
+    function routePrefix() {
+      const path = window.location.pathname || "/";
+      if (path === "/" || path === "/index.html") return "";
+      return `You tried “${path}”. `;
+    }
+
+    function shiftBackground() {
+      // Small random shift (-18..18) that only affects the radial gradient center
+      const v = Math.floor(Math.random() * 37) - 18;
+      document.documentElement.style.setProperty("--bg-shift", String(v));
+    }
+
+    async function fetchReason({ timeoutMs = 4000 } = {}) {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), timeoutMs);
 
       try {
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 4000);
-
         const res = await fetch(API_URL + "?t=" + Date.now(), {
           headers: { "Accept": "application/json" },
           signal: controller.signal
         });
-
-        clearTimeout(timeout);
-
         if (!res.ok) throw new Error("Network error");
         const data = await res.json();
-        reasonEl.textContent = data?.reason || "No reason available.";
+        return data?.reason || null;
+      } finally {
+        clearTimeout(timeout);
+      }
+    }
+
+    async function preloadNext() {
+      // Avoid overly frequent preloads (basic throttle)
+      if (Date.now() - nextFetchedAt < 500) return;
+
+      try {
+        const r = await fetchReason({ timeoutMs: 4000 });
+        if (r) {
+          nextReason = r;
+          nextFetchedAt = Date.now();
+        }
       } catch {
-        reasonEl.textContent = "No reason available.";
+        // silent (preload failure shouldn't show UI errors)
+      }
+    }
+
+    let loading = false;
+
+    async function loadReason() {
+      if (loading) return;
+      loading = true;
+
+      // background shift + new "No."
+      shiftBackground();
+      noEl.textContent = pickVariant();
+
+      reasonEl.classList.remove("loaded");
+      reasonEl.textContent = "Loading…";
+
+      try {
+        // Use preloaded reason if available for instant feel
+        let reason = nextReason;
+        nextReason = null;
+
+        if (!reason) {
+          reason = await fetchReason({ timeoutMs: 4000 });
+        }
+
+        if (!reason) {
+          // Improve failure mode (witty, consistent with theme)
+          reasonEl.textContent = routePrefix() + "Even the server said no.";
+        } else {
+          reasonEl.textContent = routePrefix() + reason;
+        }
+
+        // Immediately preload the next one after showing current
+        preloadNext();
+      } catch {
+        reasonEl.textContent = routePrefix() + "Even the server said no.";
+        preloadNext();
       } finally {
         requestAnimationFrame(() => reasonEl.classList.add("loaded"));
         loading = false;
       }
     }
 
+    // “No.” reacts to mouse position (subtle). Disable on touch devices.
+    const isTouch = window.matchMedia("(pointer: coarse)").matches;
+    if (!isTouch) {
+      document.addEventListener("mousemove", (e) => {
+        const dx = (e.clientX / window.innerWidth - 0.5) * 14; // px
+        const dy = (e.clientY / window.innerHeight - 0.5) * 10; // px
+        noEl.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
+      });
+    }
+
     document.addEventListener("click", loadReason);
     yearEl.textContent = new Date().getFullYear();
 
+    // initial load + start preload pipeline
     loadReason();
+    preloadNext();
   </script>
 </body>
 </html>
