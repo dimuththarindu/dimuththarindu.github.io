@@ -4,46 +4,78 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>No.</title>
+
   <style>
-    body {
+    * { box-sizing: border-box; }
+
+    html, body {
       margin: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      height: 100%;
+      overflow: hidden; /* no page scrollbars */
       font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
       text-align: center;
-      padding: 20px;
+    }
+
+    :root{
+      --no-top: 38vh;                 /* where "No." sits (tweak if you want) */
+      --gap: clamp(10px, 2vh, 18px);  /* space between No. and reason */
+      --side-pad: clamp(16px, 4vw, 40px);
     }
 
     .no {
-      font-size: 72px;
+      position: fixed;
+      left: 50%;
+      top: var(--no-top);
+      transform: translate(-50%, -50%);
+      margin: 0;
       font-weight: 800;
-      margin: 0 0 16px 0;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      font-size: clamp(44px, 10vw, 96px);
+      white-space: nowrap;
     }
 
     .reason {
-      font-size: 22px;
-      max-width: 800px;
+      position: fixed;
+      left: 50%;
+      top: calc(var(--no-top) + var(--gap) + 56px); /* below No. */
+      transform: translateX(-50%);
+      width: min(920px, calc(100vw - (2 * var(--side-pad))));
+      margin: 0;
+
+      font-size: clamp(16px, 3.2vw, 28px);
+      line-height: 1.4;
+      opacity: 0.92;
+      overflow-wrap: anywhere;
+
+      /* ✅ no scrollbars: clamp long text */
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 4; /* show up to 4 lines */
+      overflow: hidden;
+    }
+
+    /* Optional: allow a bit more lines on taller screens */
+    @media (min-height: 800px) {
+      .reason { -webkit-line-clamp: 5; }
     }
   </style>
 </head>
-<body>
 
-  <div class="no">No.</div>
-  <div id="reason" class="reason">Loading...</div>
+<body>
+  <h1 class="no">No.</h1>
+  <p id="reason" class="reason">Loading...</p>
 
   <script>
     fetch("https://naas.isalman.dev/no")
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById("reason").textContent = data.reason;
+      .then(r => r.json())
+      .then(d => {
+        document.getElementById("reason").textContent =
+          d?.reason || "No reason available.";
       })
       .catch(() => {
         document.getElementById("reason").textContent = "No reason available.";
       });
   </script>
-
 </body>
 </html>
