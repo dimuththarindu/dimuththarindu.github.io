@@ -5,21 +5,44 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>No.</title>
 
+  <meta name="description" content="No." />
+  <meta property="og:title" content="No." />
+  <meta property="og:description" content="The answer is no." />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap" rel="stylesheet">
+
   <style>
     * { box-sizing: border-box; }
 
     html, body {
       margin: 0;
       height: 100%;
-      overflow: hidden; /* no page scrollbars */
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      text-align: center;
+      overflow: hidden; /* no scrollbars */
     }
 
-    :root{
-      --no-top: 38vh;                 /* where "No." sits (tweak if you want) */
+    :root {
+      color-scheme: light dark;
+      --no-top: 38vh;                 /* "No." anchor position */
       --gap: clamp(10px, 2vh, 18px);  /* space between No. and reason */
-      --side-pad: clamp(16px, 4vw, 40px);
+      --side-pad: clamp(16px, 4vw, 44px);
+    }
+
+    body {
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      text-align: center;
+      padding: var(--side-pad);
+      background: #ffffff;
+      color: #111111;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: radial-gradient(circle at center, #1a1a1a, #0f0f0f);
+        color: #ffffff;
+      }
     }
 
     .no {
@@ -28,54 +51,99 @@
       top: var(--no-top);
       transform: translate(-50%, -50%);
       margin: 0;
-      font-weight: 800;
-      letter-spacing: -0.03em;
+      font-weight: 900;
+      letter-spacing: -0.04em;
       line-height: 1;
-      font-size: clamp(44px, 10vw, 96px);
+      font-size: clamp(44px, 10vw, 100px);
       white-space: nowrap;
+      user-select: none;
     }
 
     .reason {
       position: fixed;
       left: 50%;
-      top: calc(var(--no-top) + var(--gap) + 56px); /* below No. */
+      top: calc(var(--no-top) + var(--gap) + 56px);
       transform: translateX(-50%);
       width: min(920px, calc(100vw - (2 * var(--side-pad))));
       margin: 0;
 
       font-size: clamp(16px, 3.2vw, 28px);
       line-height: 1.4;
-      opacity: 0.92;
+      opacity: 0.86;
       overflow-wrap: anywhere;
 
-      /* ✅ no scrollbars: clamp long text */
+      /* No layout shift + no scrollbars: clamp long text */
       display: -webkit-box;
       -webkit-box-orient: vertical;
-      -webkit-line-clamp: 4; /* show up to 4 lines */
+      -webkit-line-clamp: 4;
       overflow: hidden;
+
+      /* reveal animation */
+      opacity: 0;
+      transform: translateX(-50%) translateY(10px);
+      transition: opacity 300ms ease, transform 300ms ease;
     }
 
-    /* Optional: allow a bit more lines on taller screens */
-    @media (min-height: 800px) {
+    .reason.loaded {
+      opacity: 0.9;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (min-height: 820px) {
       .reason { -webkit-line-clamp: 5; }
+    }
+
+    .footer {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      font-size: 12px;
+      opacity: 0.55;
+      user-select: none;
+      white-space: nowrap;
     }
   </style>
 </head>
 
 <body>
-  <h1 class="no">No.</h1>
-  <p id="reason" class="reason">Loading...</p>
+  <h1 class="no" id="noText">No.</h1>
+  <p id="reason" class="reason">Loading…</p>
+  <div class="footer">© <script>document.write(new Date().getFullYear())</script> Dimuth. Thanks for stopping by!</div>
 
   <script>
-    fetch("https://naas.isalman.dev/no")
-      .then(r => r.json())
-      .then(d => {
-        document.getElementById("reason").textContent =
-          d?.reason || "No reason available.";
-      })
-      .catch(() => {
-        document.getElementById("reason").textContent = "No reason available.";
-      });
+    const API_URL = "https://naas.isalman.dev/no";
+    const reasonEl = document.getElementById("reason");
+    const noEl = document.getElementById("noText");
+
+    const variants = ["No.", "Nope.", "Absolutely not.", "Hard pass."];
+
+    async function loadReason() {
+      // Keep "No." fixed, only update text
+      noEl.textContent = variants[Math.floor(Math.random() * variants.length)];
+
+      reasonEl.classList.remove("loaded");
+      reasonEl.textContent = "Loading…";
+
+      try {
+        const res = await fetch(API_URL + "?t=" + Date.now(), {
+          headers: { "Accept": "application/json" }
+        });
+        const data = await res.json();
+        reasonEl.textContent = data?.reason || "No reason available.";
+      } catch {
+        reasonEl.textContent = "No reason available.";
+      } finally {
+        // trigger animation on next frame
+        requestAnimationFrame(() => reasonEl.classList.add("loaded"));
+      }
+    }
+
+    // Click anywhere for a new one (no button)
+    document.addEventListener("click", loadReason);
+
+    // Initial load
+    loadReason();
   </script>
 </body>
 </html>
